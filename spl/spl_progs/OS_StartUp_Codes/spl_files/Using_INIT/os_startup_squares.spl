@@ -28,7 +28,7 @@ PTLR = 3;
 //PTBR contains page table entries in which firts word holds page reference
 //Second word hold the bits called Refrence bit, Valid bit, Write permission bit, Dirty bit
 //In this case we have 3 page entries for 65,66 and 76
-//76 is for stack page ("0110" sets the code pages "read only" and stack)
+//76 is for stack page ("0110" sets the code pages "read/write" because stack requires it)
 [PTBR+0] = 65;
 [PTBR+1] = "0100";
 [PTBR+2] = 66;
