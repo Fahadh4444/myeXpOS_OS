@@ -1,0 +1,50 @@
+0
+2056
+0
+0
+0
+0
+0
+0
+MOV R0,1
+MOV R2,5
+GE R2,R0
+JZ R2,2112
+MOV R1,R0
+MUL R1,R0
+MUL R1,R0
+// saving register context
+PUSH R0
+PUSH R1
+PUSH R2
+// pushing system call number and arguments
+// 5 system call number
+MOV R0,5
+// Argument 1 is the file descriptor which is -2 for the terminal
+MOV R2,-2
+// push system call as R0
+PUSH R0
+// push argument 1 as R2
+PUSH R2
+// push argument 2 as R1 is the word which has to be written to the terminal
+PUSH R1
+// push R0 we do not have a third argument in this case, push any register
+PUSH R0
+// push space for return value
+PUSH R0
+//invoke system call
+INT 7
+//// poping out return value and ignoring in this case
+POP R1
+// pop out three argumnets and system call number and ignore
+POP R1
+POP R1
+POP R1
+POP R1
+// restoring the register context
+POP R2
+POP R1
+POP R0
+ADD R0, 1
+JMP 2058
+INT 10
