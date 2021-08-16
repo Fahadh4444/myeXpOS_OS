@@ -1,0 +1,54 @@
+alias a R0;
+a = 0;
+alias b R1;
+b = 1;
+alias c R2;
+c = 2;
+alias d R3;
+d = 3;
+alias e R4;
+e = 4;
+alias f R5;
+f = 5;
+alias g R6;
+g = 6;
+alias h R7;
+h = 7;
+alias i R8;
+i = 8;
+alias j R9;
+j = 9;
+alias k R10;
+k = 10;
+alias l R11;
+l = 11;
+alias m R12;
+m = 12;
+alias n R13;
+n = 13;
+alias o R14;
+o = 14;
+alias p R15;
+p = 15;
+
+
+print a;
+print b;
+print c;
+print d;
+print e;
+print f;
+print g;
+print h;
+print i;
+print j;
+print k;
+print l;
+print m;
+print n;
+print o;
+print p;
+
+
+
+
