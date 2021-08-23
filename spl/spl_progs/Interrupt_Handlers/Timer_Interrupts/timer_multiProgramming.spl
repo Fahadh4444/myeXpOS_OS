@@ -1,0 +1,60 @@
+breakpoint;
+//process table 13th entry contains user stack pointer UPTR
+//In UPTR we store SP of user stack
+[PROCESS_TABLE+([SYSTEM_STATUS_TABLE+1]*16)+13]=SP;
+
+//process table 11th entry contains user area page number
+//Where it contains kernal stack and we equate it to SP
+SP=[PROCESS_TABLE+([SYSTEM_STATUS_TABLE+1]*16)+11]*512-1;
+
+//backing up used registers to current running process User Area Page
+backup;
+
+//gets currrent running process PID using status table
+alias currentPID R0;
+currentPID=[SYSTEM_STATUS_TABLE+1];
+
+//gets process table entry using currentPID
+alias process_table_entry R1;
+process_table_entry = PROCESS_TABLE + currentPID*16;
+
+//Updates kernal stack pointer of running process in process table
+[process_table_entry + 4] = READY;
+[process_table_entry + 12] = SP % 512;
+[process_table_entry + 14] = PTBR;
+[process_table_entry + 15] = PTLR;
+
+//find outs newPID
+alias newPID R2;
+if(currentPID == 0) then
+	newPID = 1;
+else
+	newPID = 0;
+endif;
+
+//gets process table entry using newPID
+alias new_process_table R3;
+new_process_table = PROCESS_TABLE + newPID*16;
+
+//gets details from kernal stack pointer of newPID process in process table
+SP = [new_process_table + 11]*512 + [new_process_table + 12];
+PTBR = [new_process_table + 14];
+PTLR = [new_process_table + 15];
+
+//Updates system status table
+[SYSTEM_STATUS_TABLE + 1] = newPID;
+
+//if new process is CREATED it makes to RUNNING
+if([new_process_table + 4] == CREATED) then
+    [new_process_table + 4] = RUNNING;
+    SP = [new_process_table + 13];
+    breakpoint;
+    ireturn;
+endif;
+[new_process_table + 4] = RUNNING;
+restore;
+SP=[PROCESS_TABLE+([SYSTEM_STATUS_TABLE+1]*16)+13];
+breakpoint;
+ireturn;
+
+
