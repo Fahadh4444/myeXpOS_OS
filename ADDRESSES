@@ -1,0 +1,19 @@
+************************************************MODULES********************************************************************
+load --module 7 $HOME/Git/myeXpOS_OS/spl/spl_progs/Modules/Boot_Module/roundRobinScheduler/bootModule.xsm
+load --module 5 $HOME/Git/myeXpOS_OS/spl/spl_progs/Modules/Scheduler_Module/roundRobinScheduler/schedulerModule.xsm
+
+
+
+
+
+
+************************************************TIMER********************************************************************
+load --int=timer $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/Timer_Interrupts/timer_roundRobinScheduler.xsm
+
+
+
+
+
+
+************************************************INT 10********************************************************************
+load --int=10 $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/INT_10/haltForMultiProg.xsm
