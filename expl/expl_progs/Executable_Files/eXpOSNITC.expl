@@ -1,0 +1,16 @@
+int main()
+{
+decl
+    int i;
+    str myexpos;
+enddecl
+begin
+	i = 1;
+	myexpos = "eXpOS NITC";
+	while(i<=50) do
+		write(myexpos);
+		i = i+1;
+	endwhile;
+	return 0;
+end
+}
