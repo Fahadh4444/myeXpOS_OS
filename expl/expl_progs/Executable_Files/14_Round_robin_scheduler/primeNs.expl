@@ -1,0 +1,23 @@
+int main()
+{
+decl
+    int i,j,temp;
+enddecl
+begin
+	i = 2;
+	while(i<=100) do
+		j = i-1;
+		while(j>0) do
+			if((i%j) == 0) then
+				break;
+			endif;
+			j = j-1;
+		endwhile;
+		if(j == 1) then
+			write(i);
+		endif;
+		i = i+1;
+	endwhile;
+	return 0;
+end
+}
