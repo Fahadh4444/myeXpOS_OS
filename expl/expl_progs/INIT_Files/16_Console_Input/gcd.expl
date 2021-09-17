@@ -1,0 +1,29 @@
+int main()
+{
+decl
+    int a,b,r;
+    str string;
+enddecl
+begin
+	string="Enter 1st num";
+	write(string);
+	read(a);
+	string="Enter 2nd num";
+	write(string);
+	read(b);
+	if(b>a) then
+		r = a;
+		a = b;
+		b = r;
+	endif;
+	while(b>0) do
+		r = a%b;
+		a = b;
+		b = r;
+	endwhile;
+	string = "GCD of nums";
+	write(string);
+	write(a);
+	return 0;
+end
+}
