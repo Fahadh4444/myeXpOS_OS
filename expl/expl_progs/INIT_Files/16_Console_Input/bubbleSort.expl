@@ -1,0 +1,46 @@
+decl
+	int n;
+	int A[100];
+enddecl
+int main()
+{
+	decl
+		int i,j,t;
+		str string;
+	enddecl
+	begin
+		string = "Enter n";
+		write(string);
+		string = "0<n<=100";
+		write(string);
+		read(n);
+		string = "Enter elements";
+		write(string);
+		i = 0;
+		while(i<n) do
+			read(A[i]);
+			i = i+1;
+		endwhile;
+		i = 0;
+		while(i<(n-1)) do
+			j = 0;
+			while(j<(n-i-1)) do
+				if(A[j]>A[j+1]) then
+					t = A[j];
+					A[j] = A[j+1];
+					A[j+1] = t;
+				endif;
+				j = j+1;
+			endwhile;
+			i = i+1;
+		endwhile;
+		string = "Sorted array";
+		write(string);
+		i = 0;
+		while(i<n) do
+			write(A[i]);
+			i = i+1;
+		endwhile;
+		return 0;
+	end
+}
