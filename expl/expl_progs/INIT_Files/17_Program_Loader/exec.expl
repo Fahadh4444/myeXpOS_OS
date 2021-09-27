@@ -1,0 +1,22 @@
+int main()
+{
+    decl
+    str s,fileName;
+    int x;
+    enddecl
+    
+    begin
+    s="File name is";
+    write(s);
+    read(fileName);
+    
+    x = exposcall("Exec", fileName);
+    
+    if(x == -1) then
+    	fileName = "Invalid File";
+    	write(fileName);
+    endif;
+    
+    return 0;
+    end
+}
