@@ -1,0 +1,6 @@
+MEMORY_FREE_LIST = gives the starting address of the memory free list.
+
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<SYSTEM STATUS TABLE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+<<<MEM_FREE_COUNT>>> = specifies the number of free pages available in memory.
+<<<WAIT_MEM_COUNT>>> in the system status table stores the number of processes waiting to acquire a memory page.
