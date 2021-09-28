@@ -25,7 +25,6 @@ if(functionNum == 4) then
 	//Calling Module 0 for acquire terminal
 	call RESOURCE_MANAGER;
 	multipop(R0,R1,R2,R3);
-	breakpoint;
 	read;
 	[PROCESS_TABLE+([SYSTEM_STATUS_TABLE+1]*16)+4] = WAIT_TERMINAL;
 	multipush(R0,R1,R2,R3);
@@ -35,7 +34,6 @@ if(functionNum == 4) then
 	alias wordAddress R3;
 	//Storing word from input buffer to R3
 	[[PTBR+2*((wordAddress)/512)]*512+((wordAddress)%512)] = [PROCESS_TABLE+(currentPID*16)+8];
-	breakpoint;
 endif;
 
 return;
