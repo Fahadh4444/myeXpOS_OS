@@ -1,0 +1,29 @@
+//GETS INVOKED WHEN USER PRESSED 'ENTER' IN TERMINAL AND
+//THEN RELEASE TERMINAL BY CALLING RESOURCE_MANAGER
+
+//process table 13th entry contains user stack pointer UPTR
+//In UPTR we store SP of user stack
+[PROCESS_TABLE+([SYSTEM_STATUS_TABLE+1]*16)+13]=SP;
+
+//process table 11th entry contains user area page number
+//Where it contains kernal stack and we equate it to SP
+SP=[PROCESS_TABLE+([SYSTEM_STATUS_TABLE+1]*16)+11]*512-1;
+
+//backing up used registers to current running process User Area Page
+backup;
+
+//gets currrent running process PID using status table
+alias reqPID R0;
+reqPID=[TERMINAL_STATUS_TABLE+1];
+
+[PROCESS_TABLE+(reqPID*16)+8] = P0;
+
+multipush(R0,R1);
+R1 = 9;
+R2 = reqPID;
+call RESOURCE_MANAGER;
+multipop(R0,R1);
+restore;
+SP=[PROCESS_TABLE+([SYSTEM_STATUS_TABLE+1]*16)+13];
+ireturn;
+
