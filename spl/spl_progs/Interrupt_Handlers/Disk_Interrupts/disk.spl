@@ -1,5 +1,6 @@
 //process table 13th entry contains user stack pointer UPTR
 //In UPTR we store SP of user stack
+breakpoint;
 [PROCESS_TABLE+([SYSTEM_STATUS_TABLE+1]*16)+13]=SP;
 
 //process table 11th entry contains user area page number
@@ -21,5 +22,6 @@ endwhile;
 
 restore;
 SP=[PROCESS_TABLE+([SYSTEM_STATUS_TABLE+1]*16)+13];
+breakpoint;
 ireturn;
 
