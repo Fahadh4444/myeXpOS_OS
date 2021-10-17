@@ -1,31 +1,29 @@
 ************************************************MODULES********************************************************************
 load --module 0 $HOME/Git/myeXpOS_OS/spl/spl_progs/Modules/Resource_Manager_Module/diskInterruptHandler/resourceManager.xsm
-load --module 1 $HOME/Git/myeXpOS_OS/spl/spl_progs/Modules/Process_Manager_Module/programLoader/processManager.xsm
-load --module 2 $HOME/Git/myeXpOS_OS/spl/spl_progs/Modules/Memory_Manager_Module/programLoader/memoryManager.xsm
+load --module 1 $HOME/Git/myeXpOS_OS/spl/spl_progs/Modules/Process_Manager_Module/exceptionHandler/processManager.xsm
+load --module 2 $HOME/Git/myeXpOS_OS/spl/spl_progs/Modules/Memory_Manager_Module/exceptionHandler/memoryManager.xsm
 load --module 4 $HOME/Git/myeXpOS_OS/spl/spl_progs/Modules/Device_Manager_Module/diskInterruptHandler/deviceManager.xsm
 load --module 5 $HOME/Git/myeXpOS_OS/spl/spl_progs/Modules/Scheduler_Module/roundRobinScheduler/schedulerModule.xsm
-load --module 7 $HOME/Git/myeXpOS_OS/spl/spl_progs/Modules/Boot_Module/diskInterruptHandler/bootModule.xsm
+load --module 7 $HOME/Git/myeXpOS_OS/spl/spl_progs/Modules/Boot_Module/exceptionHandler/bootModule.xsm
 
 
 
+************************************************EXCEPTION_HANDLER*******************************************************
+load --exhandler $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/Exception_Handlers/exceptionHandler.xsm
 
-
-************************************************TIMER********************************************************************
+************************************************TIMER*******************************************************************
 load --int=timer $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/Timer_Interrupts/timer_roundRobinScheduler.xsm
 
-
-************************************************CONSOLE********************************************************************
+************************************************CONSOLE*****************************************************************
 load --int=console $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/Console_Interrupts/console.xsm
-
 
 ************************************************DISK********************************************************************
 load --int=disk $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/Disk_Interrupts/disk.xsm
 
-
 ************************************************INT********************************************************************
 load --int=6 $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/INT_6/consoleInput.xsm
 load --int=7 $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/INT_7/resourceManagerModule.xsm
-load --int=9 $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/INT_9/diskInterruptHandler.xsm
+load --int=9 $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/INT_9/exceptionHandler.xsm
 load --int=10 $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/INT_10/haltForMultiProg.xsm
 
 
