@@ -1,0 +1,90 @@
+alias functionNum R1;
+
+//Get Free Page
+if(functionNum == 1) then
+	//[SYSTEM_STATUS_TABLE+3] => WAIT_MEM_COUNT incrementing
+	[SYSTEM_STATUS_TABLE+3] = [SYSTEM_STATUS_TABLE+3] + 1;
+	//[SYSTEM_STATUS_TABLE+2] => MEM_FREE_COUNT
+	while([SYSTEM_STATUS_TABLE+2] == 0) do
+		[PROCESS_TABLE+[SYSTEM_STATUS_TABLE+1]*16+4] = WAIT_MEM;
+		multipush(R0,R1,R2);
+		call SCHEDULER;
+		multipop(R0,R1,R2);
+	endwhile;
+	[SYSTEM_STATUS_TABLE+3] = [SYSTEM_STATUS_TABLE+3] - 1;
+	[SYSTEM_STATUS_TABLE+2] = [SYSTEM_STATUS_TABLE+2] - 1;
+	alias i R3;
+	i=0;
+	while(i<MAX_MEM_PAGE) do
+		if([MEMORY_FREE_LIST+i] == 0) then
+			[MEMORY_FREE_LIST+i] = 1;
+			R0 = i;
+			return;
+		endif;
+		i = i+1;
+	endwhile;
+endif;
+
+//Release Page
+if(functionNum == 2) then
+	alias pageNumber R2;
+	[MEMORY_FREE_LIST+pageNumber] = [MEMORY_FREE_LIST+pageNumber] - 1;
+	if([MEMORY_FREE_LIST+pageNumber] == 0) then
+		[SYSTEM_STATUS_TABLE+2] = [SYSTEM_STATUS_TABLE+2] + 1;
+		alias i R3;
+		i=0;
+		while(i<16) do
+			if([PROCESS_TABLE+16*i+4] == WAIT_MEM) then
+				[PROCESS_TABLE+16*i+4] = READY;
+			endif;
+			i = i+1;
+		endwhile;
+	endif;
+endif;
+
+//Release Block
+if(functionNum == 4) then
+	[DISK_FREE_LIST+R2] = [DISK_FREE_LIST+R2]-1;
+endif;
+
+//Get Code Page
+if(functionNum == 5) then
+	breakpoint;
+	alias codeBlock R2;
+	R5 = R2;
+	alias i R3;
+	alias j R4;
+	i=0;
+	while(i<16) do
+		j=2;
+		while(j<10) do
+			if([DISK_MAP_TABLE+10*i+j] == codeBlock) then
+				if([[PROCESS_TABLE+i*16+14]+2*j] != -1) then
+					R0 = [[PROCESS_TABLE+i*16+14]+2*j];
+					[MEMORY_FREE_LIST+R0] = [MEMORY_FREE_LIST+R0]+1;
+					return;
+				endif;
+			endif;
+			j = j+1;
+		endwhile;
+		i = i+1;
+	endwhile;
+	multipush(R1,R2);
+	//Get Free Page
+	R1 = 1;
+	call MEMORY_MANAGER;
+	multipop(R1,R2);
+	alias memPage R0;
+	multipush(R1,R2);
+	// Disk Load
+	R1 = 2;
+	R2 = [SYSTEM_STATUS_TABLE+1];
+	R3 = memPage;
+	R4 = R5;
+	call DEVICE_MANAGER;
+	multipop(R1,R2);
+	breakpoint;
+endif;
+
+return;
+
