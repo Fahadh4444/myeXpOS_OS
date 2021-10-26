@@ -48,6 +48,7 @@ if(functionNum == 4) then
 			//Calling Release page in Memory Manager Module
 			call MEMORY_MANAGER;
 			multipop(R0,R1,R2,R3);
+			[PTBR+i*2] = -1;
 			[PTBR+i*2+1] = "0000";
 		endif;
 		i = i+1;
