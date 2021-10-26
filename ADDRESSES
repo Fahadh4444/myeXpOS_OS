@@ -32,6 +32,9 @@ load --int=10 $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/INT_10/haltF
 ************************************************INIT********************************************************************
 load --init $HOME/Git/myeXpOS_OS/expl/expl_progs/INIT_Files/17_Program_Loader/exec.xsm
 
+************************************************EXEC********************************************************************
+load --exec $HOME/Git/myeXpOS_OS/expl/expl_progs/INIT_Files/19_Exception_Handler/ll.xsm
+
 
 
 ************************************************IDLE********************************************************************
