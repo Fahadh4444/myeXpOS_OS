@@ -13,8 +13,8 @@ backup;
 
 multipush(EIP);
 
-PTBR = [PROCESS_TABLE+[SYSTEM_STATUS_TABLE+1]*16+14] ;
-PTLR = [PROCESS_TABLE+[SYSTEM_STATUS_TABLE+1]*16+15] ;
+PTBR = [PROCESS_TABLE+[SYSTEM_STATUS_TABLE+1]*16+14];
+PTLR = [PROCESS_TABLE+[SYSTEM_STATUS_TABLE+1]*16+15];
 
 if(EC != 0) then
 	if(EC == 1) then
@@ -50,18 +50,18 @@ if(EC == 0) then
 		[[PROCESS_TABLE+[SYSTEM_STATUS_TABLE+1]*16+14]+4]=R0;
         	[[PROCESS_TABLE+[SYSTEM_STATUS_TABLE+1]*16+14]+5]="1110";
         	//Get Free page
-		multipop(EPN);
+		multipush(EPN);
 		R1 = 1;
 		call MEMORY_MANAGER;
 		multipop(EPN);
-		[[PROCESS_TABLE+[SYSTEM_STATUS_TABLE+1]*16+14]+4]=R0;
-        	[[PROCESS_TABLE+[SYSTEM_STATUS_TABLE+1]*16+14]+5]="1110";
+		[[PROCESS_TABLE+[SYSTEM_STATUS_TABLE+1]*16+14]+6]=R0;
+        	[[PROCESS_TABLE+[SYSTEM_STATUS_TABLE+1]*16+14]+7]="1110";
 		multipop(R0,R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,R12,R13,R14,R15);
 	endif;
 	if((EPN>=4) && (EPN<=7)) then
 		multipush(R2);
 		alias codeBlockNum R2;
-		codeBlockNum = [DISK_MAP_TABLE+[SYSTEM_STATUS_TABLE]*10+EPN];
+		codeBlockNum = [DISK_MAP_TABLE+[SYSTEM_STATUS_TABLE+1]*10+EPN];
 		multipush(R0,R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,R12,R13,R14,R15);
 		//Get Code Page
 		R1 = 5;
