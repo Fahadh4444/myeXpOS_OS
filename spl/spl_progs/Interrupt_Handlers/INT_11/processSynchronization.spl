@@ -1,0 +1,69 @@
+alias userSP R10;
+userSP = SP;
+
+//Switching Stacks
+[PROCESS_TABLE+([SYSTEM_STATUS_TABLE+1]*16)+13]=SP;
+SP=[PROCESS_TABLE+([SYSTEM_STATUS_TABLE+1]*16)+11]*512-1;
+
+alias functionNum R9;
+functionNum = [[PTBR+2*((userSP-5)/512)]*512+(userSP-5)%512];
+
+
+//getPid
+if(functionNum == 11) then
+	R0 = [SYSTEM_STATUS_TABLE+1];
+	[[PTBR+2*((userSP-1)/512)]*512+(userSP-1)%512] = R0;
+endif;
+
+//getPPid
+if(functionNum == 12) then
+	R0 = [PROCESS_TABLE+[SYSTEM_STATUS_TABLE+1]*16+2];
+	[[PTBR+2*((userSP-1)/512)]*512+(userSP-1)%512] = R0;
+endif;
+
+//wait
+if(functionNum == 13) then
+	[PROCESS_TABLE+[SYSTEM_STATUS_TABLE+1]*16+9] = 13;
+	alias PID R12;
+	PID = [[PTBR+2*((userSP-4)/512)]*512+(userSP-4)%512];
+	
+	//When PID is itself or invalid PID
+	if(PID == [SYSTEM_STATUS_TABLE+1] || PID>15) then
+		R0 = -1;
+		[[PTBR+2*((userSP-1)/512)]*512+(userSP-1)%512] = R0;
+		SP = userSP;
+		ireturn;
+	endif;
+	
+	//If PID is of Terminated Process
+	if([PROCESS_TABLE+PID*16+4] == TERMINATED) then
+		R0 = -1;
+		[[PTBR+2*((userSP-1)/512)]*512+(userSP-1)%512] = R0;
+		SP = userSP;
+		ireturn;
+	endif;
+	
+    	[PROCESS_TABLE+([SYSTEM_STATUS_TABLE+1]*16)+4]=WAIT_PROCESS;
+        [PROCESS_TABLE+([SYSTEM_STATUS_TABLE+1]*16)+5]=PID;
+    	multipush(R10,R11,R12);
+    	call SCHEDULER;
+   	multipop(R10,R11,R12);
+    	[PROCESS_TABLE+[SYSTEM_STATUS_TABLE+1]*16+9]=0;
+endif;
+
+//signal
+if(functionNum == 14) then
+    [PROCESS_TABLE+[SYSTEM_STATUS_TABLE+1]*16+9]=14;
+    alias i R12;
+    i=0;
+    while(i<16) do
+        if(([PROCESS_TABLE+i*16+4]==WAIT_PROCESS)&&([PROCESS_TABLE+i*16+5]==[SYSTEM_STATUS_TABLE+1])) then
+            [PROCESS_TABLE+i*16+4]=READY;
+        endif;
+        i=i+1;
+    endwhile;
+    [PROCESS_TABLE+[SYSTEM_STATUS_TABLE+1]*16+9]=0;
+endif;
+
+SP=userSP;
+ireturn;
