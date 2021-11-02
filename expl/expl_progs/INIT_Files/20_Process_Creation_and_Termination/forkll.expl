@@ -42,7 +42,7 @@ begin
                       
     pid = exposcall("Fork");
     if(pid == 0) then
-        p = head;
+        p = head.next;
         while(p != null)  do
             x = p.data;
             temp = exposcall("Write",-2,x);
@@ -53,7 +53,7 @@ begin
             p = p.next;
         endwhile;
     else
-        q = head.next;
+        q = head;
         while(q != null)  do
             x = q.data;
             temp = exposcall("Write",-2,x);
