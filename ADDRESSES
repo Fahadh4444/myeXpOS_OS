@@ -1,10 +1,10 @@
 ************************************************MODULES********************************************************************
-load --module 0 $HOME/Git/myeXpOS_OS/spl/spl_progs/Modules/Resource_Manager_Module/diskInterruptHandler/resourceManager.xsm
-load --module 1 $HOME/Git/myeXpOS_OS/spl/spl_progs/Modules/Process_Manager_Module/processSynchronization/processManager.xsm
+load --module 0 $HOME/Git/myeXpOS_OS/spl/spl_progs/Modules/Resource_Manager_Module/fileCreationAndDeletion/resourceManager.xsm
+load --module 1 $HOME/Git/myeXpOS_OS/spl/spl_progs/Modules/Process_Manager_Module/semaphores/processManager.xsm
 load --module 2 $HOME/Git/myeXpOS_OS/spl/spl_progs/Modules/Memory_Manager_Module/exceptionHandler/memoryManager.xsm
-load --module 4 $HOME/Git/myeXpOS_OS/spl/spl_progs/Modules/Device_Manager_Module/diskInterruptHandler/deviceManager.xsm
+load --module 4 $HOME/Git/myeXpOS_OS/spl/spl_progs/Modules/Device_Manager_Module/fileCreationAndDeletion/deviceManager.xsm
 load --module 5 $HOME/Git/myeXpOS_OS/spl/spl_progs/Modules/Scheduler_Module/processCreationAndTermination/schedulerModule.xsm
-load --module 7 $HOME/Git/myeXpOS_OS/spl/spl_progs/Modules/Boot_Module/processSynchronization/bootModule.xsm
+load --module 7 $HOME/Git/myeXpOS_OS/spl/spl_progs/Modules/Boot_Module/fileCreationAndDeletion/bootModule.xsm
 
 
 
@@ -21,18 +21,21 @@ load --int=console $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/Console
 load --int=disk $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/Disk_Interrupts/disk.xsm
 
 ************************************************INT********************************************************************
+load --int=4 $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/INT_4/fileCreationAndDeletion.xsm
 load --int=6 $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/INT_6/consoleInput.xsm
 load --int=7 $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/INT_7/resourceManagerModule.xsm
-load --int=8 $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/INT_8/processCreationAndTermination.xsm
+load --int=8 $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/INT_8/semaphores.xsm
 load --int=9 $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/INT_9/exceptionHandler.xsm
 load --int=10 $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/INT_10/haltExit.xsm
 load --int=11 $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/INT_11/processSynchronization.xsm
-load --int=15 $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/INT_15/processSynchronization.xsm
+load --int=13 $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/INT_13/semaphores.xsm
+load --int=14 $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/INT_14/semaphores.xsm
+load --int=15 $HOME/Git/myeXpOS_OS/spl/spl_progs/Interrupt_Handlers/INT_15/fileCreationAndDeletion.xsm
 
 
 ************************************************INIT********************************************************************
-load --init $HOME/Git/myeXpOS_OS/expl/expl_progs/INIT_Files/17_Program_Loader/exec.xsm
-load --init $HOME/Git/myeXpOS_OS/expl/expl_progs/INIT_Files/20_Process_Creation_and_Termination/forkll.xsm
+load --init $HOME/Git/myeXpOS_OS/expl/expl_progs/INIT_Files/22_Semaphores/rw.xsm
+load --exec $HOME/Git/myeXpOS_OS/expl/expl_progs/INIT_Files/23_File_Creation_and_Deletion/create.xsm
 load --exec $HOME/Git/myeXpOS_OS/expl/expl_progs/INIT_Files/21_Process_Synchronization/forks.xsm
 
 
