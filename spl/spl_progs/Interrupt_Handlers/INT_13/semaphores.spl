@@ -15,7 +15,7 @@ if(functionNum == 17) then
 	alias i R11;
 	i = 0;
 	alias pid R12;
-	pid = [SYSTEM_STATUS_TABEL+1];
+	pid = [SYSTEM_STATUS_TABLE+1];
 	alias ind R13;
 	ind = -1;
 	
@@ -37,14 +37,16 @@ if(functionNum == 17) then
 	
 	//Resource indentifier for semaphore
 	[[PROCESS_TABLE +pid*16+11]*512+2*ind+496]=1;
+	
 	multipush(R9,R10,R11,R12,R13);
-	//Semaphore
+	//Acquire Semaphore
 	R1 = 6;
 	R2 = pid;
 	call RESOURCE_MANAGER;
 	multipop(R9,R10,R11,R12,R13);
 	
-	if(R0 = -1) then
+	if(R0 == -1) then
+		[[PROCESS_TABLE +pid*16+11]*512+2*ind+496]=-1;
 		R0 = -2;
 		[[PTBR+2*((userSP-1)/512)]*512 + (userSP-1)%512]=R0;
 		SP = userSP;
@@ -67,7 +69,7 @@ if(functionNum == 18) then
 	semID = [[PTBR+2*((userSP-4)/512)]*512 + (userSP-4)%512];
 	
 	//Invalid semID
-	if(semID <0 || semID > 7) then
+	if(semID < 0 || semID > 7) then
 		R0 = -1;
 		[[PTBR+2*((userSP-1)/512)]*512 + (userSP-1)%512] = R0;
 		SP = userSP;
